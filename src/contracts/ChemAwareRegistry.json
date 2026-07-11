@@ -1,0 +1,120 @@
+{
+  "contractName": "ChemAwareRegistry",
+  "note": "ABI hand-synced with contracts/ChemAwareRegistry.sol. Running `npm run compile` regenerates the canonical artifact under artifacts/ — copy its abi array here (or import directly from artifacts/) after any contract change.",
+  "abi": [
+    {
+      "type": "function",
+      "name": "submitReport",
+      "stateMutability": "nonpayable",
+      "inputs": [
+        { "name": "productId", "type": "string" },
+        { "name": "productName", "type": "string" },
+        { "name": "reportHash", "type": "bytes32" },
+        { "name": "ipfsCid", "type": "string" }
+      ],
+      "outputs": [{ "name": "reportId", "type": "uint256" }]
+    },
+    {
+      "type": "function",
+      "name": "upvoteReport",
+      "stateMutability": "nonpayable",
+      "inputs": [{ "name": "reportId", "type": "uint256" }],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "flagReport",
+      "stateMutability": "nonpayable",
+      "inputs": [
+        { "name": "reportId", "type": "uint256" },
+        { "name": "reason", "type": "string" }
+      ],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "getReportCount",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [{ "name": "", "type": "uint256" }]
+    },
+    {
+      "type": "function",
+      "name": "getReport",
+      "stateMutability": "view",
+      "inputs": [{ "name": "reportId", "type": "uint256" }],
+      "outputs": [
+        {
+          "name": "",
+          "type": "tuple",
+          "components": [
+            { "name": "productId", "type": "string" },
+            { "name": "productName", "type": "string" },
+            { "name": "reportHash", "type": "bytes32" },
+            { "name": "ipfsCid", "type": "string" },
+            { "name": "submitter", "type": "address" },
+            { "name": "timestamp", "type": "uint256" },
+            { "name": "upvotes", "type": "uint256" },
+            { "name": "flags", "type": "uint256" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "function",
+      "name": "hasAddressUpvoted",
+      "stateMutability": "view",
+      "inputs": [
+        { "name": "reportId", "type": "uint256" },
+        { "name": "voter", "type": "address" }
+      ],
+      "outputs": [{ "name": "", "type": "bool" }]
+    },
+    {
+      "type": "function",
+      "name": "hasAddressFlagged",
+      "stateMutability": "view",
+      "inputs": [
+        { "name": "reportId", "type": "uint256" },
+        { "name": "voter", "type": "address" }
+      ],
+      "outputs": [{ "name": "", "type": "bool" }]
+    },
+    {
+      "type": "event",
+      "name": "ReportSubmitted",
+      "inputs": [
+        { "name": "reportId", "type": "uint256", "indexed": true },
+        { "name": "productId", "type": "string", "indexed": false },
+        { "name": "productName", "type": "string", "indexed": false },
+        { "name": "reportHash", "type": "bytes32", "indexed": false },
+        { "name": "ipfsCid", "type": "string", "indexed": false },
+        { "name": "submitter", "type": "address", "indexed": true },
+        { "name": "timestamp", "type": "uint256", "indexed": false }
+      ]
+    },
+    {
+      "type": "event",
+      "name": "ReportUpvoted",
+      "inputs": [
+        { "name": "reportId", "type": "uint256", "indexed": true },
+        { "name": "voter", "type": "address", "indexed": true },
+        { "name": "newUpvoteCount", "type": "uint256", "indexed": false }
+      ]
+    },
+    {
+      "type": "event",
+      "name": "ReportFlagged",
+      "inputs": [
+        { "name": "reportId", "type": "uint256", "indexed": true },
+        { "name": "flagger", "type": "address", "indexed": true },
+        { "name": "reason", "type": "string", "indexed": false },
+        { "name": "newFlagCount", "type": "uint256", "indexed": false }
+      ]
+    },
+    { "type": "error", "name": "DuplicateReport", "inputs": [] },
+    { "type": "error", "name": "InvalidReportId", "inputs": [] },
+    { "type": "error", "name": "AlreadyVoted", "inputs": [] },
+    { "type": "error", "name": "EmptyField", "inputs": [] }
+  ]
+}

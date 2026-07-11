@@ -1,0 +1,104 @@
+:root {
+  --ca-primary: #0d6efd;
+  --ca-gradient: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
+  --ca-surface: #ffffff;
+  --ca-surface-2: #f8f9fa;
+  --ca-text: #212529;
+  --ca-border: rgba(0, 0, 0, 0.08);
+  --ca-shadow: 0 0.5rem 1.5rem rgba(20, 20, 43, 0.08);
+  --ca-radius: 1rem;
+}
+
+[data-theme='dark'] {
+  --ca-surface: #14161f;
+  --ca-surface-2: #1c1f2b;
+  --ca-text: #e9ecf1;
+  --ca-border: rgba(255, 255, 255, 0.08);
+  --ca-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.45);
+}
+
+[data-theme='dark'] body {
+  background-color: #0c0d13;
+  color: var(--ca-text);
+}
+
+[data-theme='dark'] .navbar,
+[data-theme='dark'] .card,
+[data-theme='dark'] .modal-content,
+[data-theme='dark'] .dropdown-menu,
+[data-theme='dark'] .offcanvas,
+[data-theme='dark'] footer {
+  background-color: var(--ca-surface) !important;
+  color: var(--ca-text);
+  border-color: var(--ca-border) !important;
+}
+
+[data-theme='dark'] .bg-body-tertiary,
+[data-theme='dark'] .table {
+  background-color: var(--ca-surface-2) !important;
+  color: var(--ca-text);
+}
+
+[data-theme='dark'] .text-muted {
+  color: #9aa0ac !important;
+}
+
+.ca-hero {
+  background: var(--ca-gradient);
+  color: #fff;
+  border-radius: 0 0 2rem 2rem;
+}
+
+.ca-card {
+  border: 1px solid var(--ca-border);
+  border-radius: var(--ca-radius);
+  box-shadow: var(--ca-shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  background-color: var(--ca-surface);
+}
+
+.ca-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 1rem 2rem rgba(20, 20, 43, 0.14);
+}
+
+.ca-badge-verified {
+  background: var(--ca-gradient);
+  color: #fff;
+  border-radius: 50rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.ca-stat {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.ca-section {
+  padding: 3.5rem 0;
+}
+
+.ca-avatar-gradient {
+  background: var(--ca-gradient);
+  color: #fff;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.ca-loading-shimmer {
+  background: linear-gradient(90deg, var(--ca-surface-2) 25%, var(--ca-border) 50%, var(--ca-surface-2) 75%);
+  background-size: 200% 100%;
+  animation: ca-shimmer 1.4s infinite;
+  border-radius: 0.5rem;
+}
+
+@keyframes ca-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
