@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { deriveChemicalFormula } from '../utils/chemicalFormulas.js';
 
 const BASE = 'https://api.fda.gov';
-const API_KEY = import.meta.env.VITE_OPENFDA_API_KEY || '';
+const API_KEY = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_OPENFDA_API_KEY) || '';
 
-const client = axios.create({ baseURL: BASE, timeout: 15000 });
+const client = axios.create({ baseURL: BASE, timeout: 6000 });
 
 function withKey(params) {
   return API_KEY ? { ...params, api_key: API_KEY } : params;
@@ -30,8 +31,9 @@ export async function searchDrugs(query, limit = 10) {
 
 function normalizeDrugResult(result) {
   const openfda = result.openfda || {};
-  return {
+  const partial = {
     source: 'openfda',
+    category: 'medicine',
     id: result.id || openfda.spl_id?.[0] || crypto.randomUUID(),
     name: openfda.brand_name?.[0] || openfda.generic_name?.[0] || 'Unknown Medicine',
     manufacturer: openfda.manufacturer_name?.[0] || 'Unknown manufacturer',
@@ -41,6 +43,11 @@ function normalizeDrugResult(result) {
     sideEffects: result.adverse_reactions || [],
     dosage: result.dosage_and_administration || [],
     indications: result.indications_and_usage || [],
+  };
+
+  return {
+    ...partial,
+    molecularFormula: deriveChemicalFormula(partial),
   };
 }
 

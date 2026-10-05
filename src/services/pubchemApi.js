@@ -2,17 +2,25 @@ import axios from 'axios';
 
 const BASE = 'https://pubchem.ncbi.nlm.nih.gov/rest/pug';
 
-const client = axios.create({ baseURL: BASE, timeout: 15000 });
+const client = axios.create({ baseURL: BASE, timeout: 6000 });
 
 /**
  * Searches PubChem compounds by name and returns a normalized list of
  * lightweight results suitable for search-result cards.
  */
 export async function searchCompoundsByName(name, limit = 10) {
-  const { data } = await client.get(`/compound/name/${encodeURIComponent(name)}/cids/JSON`);
-  const cids = (data?.IdentifierList?.CID || []).slice(0, limit);
-  if (cids.length === 0) return [];
-  return getCompoundSummaries(cids);
+  try {
+    const { data } = await client.get(`/compound/name/${encodeURIComponent(name)}/cids/JSON`);
+    const cids = (data?.IdentifierList?.CID || []).slice(0, limit);
+    if (cids.length === 0) return [];
+    return getCompoundSummaries(cids);
+  } catch (err) {
+    // 404 means the name did not match a pure chemical compound in PubChem
+    if (err?.response?.status !== 404) {
+      console.warn('[pubchemApi] Search failed', err?.message);
+    }
+    return [];
+  }
 }
 
 /**
